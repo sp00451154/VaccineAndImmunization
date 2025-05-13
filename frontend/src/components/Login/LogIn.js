@@ -7,7 +7,7 @@ import {
 import { Redirect, Link } from "react-router-dom";
 import base64 from "react-native-base64";
 import { Formik } from "formik";
-import { validateName, validatePassword } from "../../validations/validations";
+import { validateEmail, validatePassword } from "../../validations/validations";
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -22,13 +22,13 @@ class LogIn extends React.Component {
       <div>
         <Formik
           initialValues={{
-            userName: "",
+            userEmail: "",
             password: "",
           }}
           validate={(values) => {
             const errors = {};
 
-            errors.userName = validateName(values.userName, "Username") || null;
+            errors.userName = validateEmail(values.userEmail, "User Email") || null;
             errors.password = validatePassword(values.password) || null;
 
             for (var key in errors) {
@@ -38,21 +38,21 @@ class LogIn extends React.Component {
           }}
           onSubmit={(values, actions) => {
             actions.setSubmitting(false);
-            let userObj = localStorage.getItem(values.userName);
+            let userObj = localStorage.getItem(values.userEmail);
             if (!userObj) {
               ToastsStore.error("Invalid Username/Password.");
             } else {
               userObj = JSON.parse(userObj);
-              const localUname = (userObj && userObj.userName) || null;
+              const localEmail = (userObj && userObj.userEmail) || null;
               const localUpwd =
                 (userObj && base64.decode(userObj.password)) || null;
 
               if (
-                values.userName === localUname &&
+                values.userEmail === localEmail &&
                 values.password === localUpwd
               ) {
                 userObj.isUserLoggedIn = true;
-                localStorage.setItem(values.userName, JSON.stringify(userObj));
+                localStorage.setItem(values.userEmail, JSON.stringify(userObj));
                 this.setState({ submit: true });
               } else {
                 ToastsStore.error("Invalid Username/Password.");
@@ -81,11 +81,11 @@ class LogIn extends React.Component {
                       <form onSubmit={props.handleSubmit}>
                         <div className="form-group">
                           <label className="font-weight-bold">
-                            Username <span className="text-danger">*</span>
+                            Email <span className="text-danger">*</span>
                             <span className="errorMsg">
-                              {props.errors.userName &&
-                                props.touched.userName &&
-                                props.errors.userName}
+                              {props.errors.userEmail &&
+                                props.touched.userEmail &&
+                                props.errors.userEmail}
                             </span>
                           </label>
                           <input
@@ -95,7 +95,7 @@ class LogIn extends React.Component {
                             name="userName"
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
-                            value={props.values.userName}
+                            value={props.values.userEmail}
                           />
                         </div>
                         <div className="form-group">
