@@ -7,7 +7,7 @@ import {
   ToastsContainerPosition,
 } from "react-toasts";
 import base64 from "react-native-base64";
-import { validateName, validatePassword } from "../../validations/validations";
+import { validateName, validatePassword, validateEmail } from "../../validations/validations";
 
 class Register extends React.Component {
   render() {
@@ -28,8 +28,8 @@ class Register extends React.Component {
               validateName(values.firstName, "First Name") || null;
             errors.lastName =
               validateName(values.lastName, "Last Name") || null;
-            errors.userName =
-              validateName(values.userName, "User Name") || null;
+            errors.userEmail =
+              validateEmail(values.userEmail, "Email Address") || null;
             errors.password =
               validatePassword(values.password, "password") || null;
             errors.cpassword =
@@ -53,7 +53,7 @@ class Register extends React.Component {
                 JSON.stringify({
                   firstName: values.firstName,
                   lastName: values.lastName,
-                  userName: values.userName,
+                  userEmail: base64.encode(values.userEmail),
                   password: base64.encode(values.password),
                   isUserLoggedIn: false,
                 })
@@ -62,7 +62,7 @@ class Register extends React.Component {
               ToastsStore.success("User registered successfully.");
               actions.resetForm();
             } else {
-              ToastsStore.error("Username is already exists.");
+              ToastsStore.error("User email is already registered.");
             }
           }}
         >
@@ -122,24 +122,24 @@ class Register extends React.Component {
                         </div>
                         <div className="form-group">
                           <label className="font-weight-bold">
-                            User Name <span className="text-danger">*</span>
+                            Email Address <span className="text-danger">*</span>
                             <span className="errorMsg">
-                              {props.errors.userName &&
-                                props.touched.userName &&
-                                props.errors.userName}
+                              {props.errors.userEmail &&
+                                props.touched.userEmail &&
+                                props.errors.userEmail}
                             </span>
                           </label>
                           <input
                             type="text"
-                            placeholder="Enter User Name"
-                            name="userName"
+                            placeholder="Enter Email Address"
+                            name="userEmail"
                             className="form-control"
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
-                            value={props.values.userName}
+                            value={props.values.userEmail}
                           />
                           <div className="text-danger">
-                            <em>This will be your login name!</em>
+                            <em>This will be used for your login!</em>
                           </div>
                         </div>
 
