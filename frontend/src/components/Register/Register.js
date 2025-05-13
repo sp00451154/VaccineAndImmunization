@@ -78,11 +78,7 @@ class Register extends React.Component {
                   >
                     <div className="col-sm-12 border border-primary shadow rounded pt-2">
                       <div className="text-center">
-                        <img
-                          src="./logo.png"
-                          className="rounded-circle border p-1 rotate"
-                          alt=""
-                        />
+                       
                       </div>
                       <form onSubmit={props.handleSubmit}>
                         <div className="form-group">
@@ -99,6 +95,7 @@ class Register extends React.Component {
                             placeholder="Enter First Name"
                             name="firstName"
                             className="form-control"
+                            autoFocus="true"
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.firstName}

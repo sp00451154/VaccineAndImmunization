@@ -64,7 +64,7 @@ class LogIn extends React.Component {
             <div className="container mt-2 mb-4 divMiddle">
               <div className="col-sm-8 ml-auto mr-auto">
                 <h1 className="display-5 text-center pb-5">
-                  <u>React Signup, Signin, Logout features</u>
+                  
                 </h1>
                 <div
                   className="tab-content col-sm-6 ml-auto mr-auto"
@@ -77,13 +77,7 @@ class LogIn extends React.Component {
                     aria-labelledby="pills-signin-tab"
                   >
                     <div className="col-sm-12 border border-primary shadow rounded pt-2">
-                      <div className="text-center">
-                        <img
-                          src="./logo.png"
-                          className="rounded-circle border p-1 rotate"
-                          alt=""
-                        />
-                      </div>
+                      
                       <form onSubmit={props.handleSubmit}>
                         <div className="form-group">
                           <label className="font-weight-bold">
