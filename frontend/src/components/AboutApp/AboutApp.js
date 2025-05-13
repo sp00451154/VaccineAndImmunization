@@ -13,7 +13,7 @@ class AboutApp extends React.Component {
   render() {
     return (
       <div>
-        <div className="bottom-right">
+        {/* <div className="bottom-right">
           <button
             type="button"
             className="btn btn-primary"
@@ -22,7 +22,7 @@ class AboutApp extends React.Component {
           >
             About
           </button>
-        </div>
+        </div> */}
 
         <div className="modal" id="myModal">
           <div className="modal-dialog modal-dialog-centered">
