@@ -4,7 +4,7 @@ import {
   ToastsStore,
   ToastsContainerPosition,
 } from "react-toasts";
-import { Redirect, Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import base64 from "react-native-base64";
 import { Formik } from "formik";
 import { validateName, validatePassword } from "../../validations/validations";
@@ -138,7 +138,7 @@ class LogIn extends React.Component {
                       {localStorage.getItem(props.values.userName) &&
                       JSON.parse(localStorage.getItem(props.values.userName))
                         .isUserLoggedIn ? (
-                        <Redirect
+                        <Navigate
                           to={{
                             pathname: "/dashboard",
                             state: { userName: props.values.userName },

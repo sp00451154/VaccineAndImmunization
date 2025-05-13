@@ -15,8 +15,7 @@ class Register extends React.Component {
       <div>
         <Formik
           initialValues={{
-            firstName: "",
-            lastName: "",
+            name: "",
             userName: "",
             password: "",
             cpassword: "",
@@ -26,8 +25,6 @@ class Register extends React.Component {
 
             errors.firstName =
               validateName(values.firstName, "First Name") || null;
-            errors.lastName =
-              validateName(values.lastName, "Last Name") || null;
             errors.userEmail =
               validateEmail(values.userEmail, "Email Address") || null;
             errors.password =
@@ -52,7 +49,6 @@ class Register extends React.Component {
                 values.userName,
                 JSON.stringify({
                   firstName: values.firstName,
-                  lastName: values.lastName,
                   userEmail: base64.encode(values.userEmail),
                   password: base64.encode(values.password),
                   isUserLoggedIn: false,
@@ -99,25 +95,6 @@ class Register extends React.Component {
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
                             value={props.values.firstName}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label className="font-weight-bold">
-                            Last Name <span className="text-danger">*</span>
-                            <span className="errorMsg">
-                              {props.errors.lastName &&
-                                props.touched.lastName &&
-                                props.errors.lastName}
-                            </span>
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="Enter Last Name"
-                            name="lastName"
-                            className="form-control"
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.lastName}
                           />
                         </div>
                         <div className="form-group">

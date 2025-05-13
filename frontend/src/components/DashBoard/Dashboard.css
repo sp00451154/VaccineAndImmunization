@@ -1,0 +1,56 @@
+/* src/components/DashBoard/Dashboard.css */
+
+/* Custom Navbar Styling */
+.custom-navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.custom-logo {
+  height: 36px;
+  width: auto;
+}
+
+.custom-brand {
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.custom-logout-btn {
+  font-weight: bold;
+  padding: 6px 12px;
+}
+
+
+.dashboard-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.logo-img {
+  height: 36px;
+  width: auto;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card h5 {
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 14px;
+  color: #555;
+}
