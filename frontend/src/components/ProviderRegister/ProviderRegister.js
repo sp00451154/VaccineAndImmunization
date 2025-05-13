@@ -7,26 +7,35 @@ import {
   ToastsContainerPosition,
 } from "react-toasts";
 import base64 from "react-native-base64";
-import { validateName, validatePassword, validateEmail } from "../../validations/validations";
+import { validatePassword, validateEmail, validateProviderName, validateAddress, validateState, validateZipCode } from "../../validations/validations";
 
-class Register extends React.Component {
+class ProviderRegister extends React.Component {
   render() {
     return (
       <div>
         <Formik
           initialValues={{
-            name: "",
-            userName: "",
+            providerName: "",
+            providerEmail: "",
+            providerAddress: "",
+            providerState: "",
+            providerZipCode: "",
             password: "",
             cpassword: "",
           }}
           validate={(values) => {
             const errors = {};
 
-            errors.firstName =
-              validateName(values.firstName, "First Name") || null;
-            errors.userEmail =
-              validateEmail(values.userEmail, "Email Address") || null;
+            errors.providerName =
+              validateProviderName(values.providerName, "Provider Name") || null;
+            errors.providerEmail = 
+                validateEmail(values.providerEmail, "Provider Email") || null;
+            errors.providerAddress = 
+                validateAddress(values.providerAddress, "Provider Address") || null;
+            errors.providerState = 
+                validateState(values.providerState, "Provider State") || null;
+            errors.providerZipCode = 
+                validateZipCode(values.providerZipCode, "Provider ZIP Code") || null;
             errors.password =
               validatePassword(values.password, "password") || null;
             errors.cpassword =
@@ -48,17 +57,19 @@ class Register extends React.Component {
               localStorage.setItem(
                 values.userName,
                 JSON.stringify({
-                  firstName: values.firstName,
-                  userEmail: base64.encode(values.userEmail),
+                 providerName: values.providerName,
+                providerEmail: base64.encode(values.email),
+                providerAddress: base64.encode(values.providerAddress),
+                providerState: values.providerState,
                   password: base64.encode(values.password),
                   isUserLoggedIn: false,
                 })
               );
 
-              ToastsStore.success("User registered successfully.");
+              ToastsStore.success("Provider registered successfully.");
               actions.resetForm();
             } else {
-              ToastsStore.error("User email is already registered.");
+              ToastsStore.error("Provider already exists.");
             }
           }}
         >
@@ -79,45 +90,107 @@ class Register extends React.Component {
                       <form onSubmit={props.handleSubmit}>
                         <div className="form-group">
                           <label className="font-weight-bold">
-                            First Name <span className="text-danger">*</span>
+                            Provider Name <span className="text-danger">*</span>
                             <span className="errorMsg">
-                              {props.errors.firstName &&
-                                props.touched.firstName &&
-                                props.errors.firstName}
+                              {props.errors.providerName &&
+                                props.touched.providerName &&
+                                props.errors.providerName}
                             </span>
                           </label>
                           <input
                             type="text"
-                            placeholder="Enter First Name"
-                            name="firstName"
+                            placeholder="Enter Provider Name"
+                            name="providerName"
                             className="form-control"
                             autoFocus="true"
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
-                            value={props.values.firstName}
+                            value={props.values.providerName}
                           />
                         </div>
-                        <div className="form-group">
+
+                         <div className="form-group">
                           <label className="font-weight-bold">
-                            Email Address <span className="text-danger">*</span>
+                            Provider Email <span className="text-danger">*</span>
                             <span className="errorMsg">
-                              {props.errors.userEmail &&
-                                props.touched.userEmail &&
-                                props.errors.userEmail}
+                              {props.errors.providerEmail &&
+                                props.touched.providerEmail &&
+                                props.errors.providerEmail}
                             </span>
                           </label>
                           <input
                             type="text"
-                            placeholder="Enter Email Address"
-                            name="userEmail"
+                            placeholder="Enter Provider Email"
+                            name="providerEmail"
                             className="form-control"
+                            autoFocus="true"
                             onChange={props.handleChange}
                             onBlur={props.handleBlur}
-                            value={props.values.userEmail}
+                            value={props.values.providerEmail}
                           />
-                          <div className="text-danger">
-                            <em>This will be used for your login!</em>
-                          </div>
+                        </div>
+
+                         <div className="form-group">
+                          <label className="font-weight-bold">
+                            Address <span className="text-danger">*</span>
+                            <span className="errorMsg">
+                              {props.errors.providerAddress &&
+                                props.touched.providerAddress &&
+                                props.errors.providerAddress}
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Provider Address"
+                            name="providerAddress"
+                            className="form-control"
+                            autoFocus="true"
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.providerAddress}
+                          />
+                        </div> 
+                        
+                         <div className="form-group">
+                          <label className="font-weight-bold">
+                            State <span className="text-danger">*</span>
+                            <span className="errorMsg">
+                              {props.errors.providerState &&
+                                props.touched.providerState &&
+                                props.errors.providerState}
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Provider State"
+                            name="providerState"
+                            className="form-control"
+                            autoFocus="true"
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.providerState}
+                          />
+                        </div> 
+
+                        <div className="form-group">
+                          <label className="font-weight-bold">
+                            ZIP Code <span className="text-danger">*</span>
+                            <span className="errorMsg">
+                              {props.errors.providerZipCode &&
+                                props.touched.providerZipCode &&
+                                props.errors.providerZipCode}
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter Provider State"
+                            name="providerZipCode"
+                            className="form-control"
+                            autoFocus="true"
+                            onChange={props.handleChange}
+                            onBlur={props.handleBlur}
+                            value={props.values.providerZipCode}
+                          />
                         </div>
 
                         <div className="form-group">
@@ -192,4 +265,4 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default ProviderRegister;

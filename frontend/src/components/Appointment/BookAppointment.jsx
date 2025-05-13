@@ -1,23 +1,24 @@
-// pages/Patient/BookAppointment.jsx
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from '../../service/api';
 import './BookAppointment.css';
 
 const BookAppointment = () => {
-  const { vaccineId } = useParams();
+  const { vaccine } = useParams();
   const navigate = useNavigate();
 
   const [date, setDate] = useState('');
-  const [providerId, setProviderId] = useState('');
+  const [time, setTime] = useState(''); // ✅ NEW
+  const [provider, setProviderId] = useState('');
   const [providers, setProviders] = useState([]);
+  const [patient, setPatient] = useState('6823255072382876e3f110ec');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  // Fetch provider list on mount
+  // Fetch provider list
   useEffect(() => {
     axios
-      .get('/provider/patients')
+      .get('/providers')
       .then((res) => setProviders(res.data))
       .catch((err) => {
         console.error(err);
@@ -30,9 +31,11 @@ const BookAppointment = () => {
     e.preventDefault();
     try {
       await axios.post('/appointments', {
-        vaccineId,
-        providerId,
+        vaccine,
+        provider,
+        patient,
         date,
+        time, // ✅ include time
       });
       setIsError(false);
       setMessage('Appointment booked successfully!');
@@ -65,10 +68,18 @@ const BookAppointment = () => {
             onChange={(e) => setDate(e.target.value)}
           />
 
+          <label>Select Time:</label> {/* ✅ NEW */}
+          <input
+            type="time"
+            required
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+
           <label>Select Provider:</label>
           <select
             required
-            value={providerId}
+            value={provider}
             onChange={(e) => setProviderId(e.target.value)}
           >
             <option value="">-- Select Provider --</option>

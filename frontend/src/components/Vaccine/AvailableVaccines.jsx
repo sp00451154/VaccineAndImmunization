@@ -48,7 +48,7 @@ const AvailableVaccines = () => {
             vaccines.map((vaccine) => (
               <div className="vaccine-card" key={vaccine._id}>
                 <div>
-                  <strong>{vaccine.name}</strong> – {vaccine.disease}
+                  <strong>{vaccine.name}</strong>
                 </div>
                 <Link className="book-btn" to={`/book/${vaccine._id}`}>
                   Book

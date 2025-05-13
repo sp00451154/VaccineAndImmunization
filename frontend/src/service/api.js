@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/api', // Adjust to your backend
+  baseURL: 'http://10.137.200.87:8000/api', // Adjust to your backend
 });
 
 instance.interceptors.request.use((config) => {

@@ -1,153 +1,135 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
-const _ = require("lodash");
+import { Navigate, useLocation, Link } from "react-router-dom";
+import _ from "lodash";
+import "./Dashboard.css";
 
 class DashBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: this.props.name,
-      board: [],
-      boardItem: "",
-      toggle: false,
       submit: true,
       logout: false,
       loggedInUserObj: {},
     };
   }
 
-  onLogoutYes = () => {
-    this.setState({ submit: false });
-    this.setState({ toggle: true });
-    const userObj = JSON.parse(
-      localStorage.getItem(_.get(this.state.loggedInUserObj, "userName", ""))
-    );
-    userObj.isUserLoggedIn = false;
-    localStorage.setItem(
-      _.get(this.state.loggedInUserObj, "userName", ""),
-      JSON.stringify(userObj)
-    );
-  };
-
-  onLogout = () => {
-    this.setState({
-      logout: !this.state.logout,
-    });
-  };
-
   componentDidMount() {
-    const loggedInUserName = _.get(this.props.location, "state.userName", {});
-    this.setState({
-      loggedInUserObj: JSON.parse(localStorage.getItem(loggedInUserName)),
-    });
+    const locationState = this.props.location?.state;
+    const loggedInUserName = _.get(locationState, "userName", "");
+    const userData = JSON.parse(localStorage.getItem(loggedInUserName));
+    if (userData) {
+      this.setState({ loggedInUserObj: userData });
+    }
   }
 
+  onLogout = () => {
+    const userKey = _.get(this.state.loggedInUserObj, "userName", "");
+    const userData = JSON.parse(localStorage.getItem(userKey));
+    if (userData) {
+      userData.isUserLoggedIn = false;
+      localStorage.setItem(userKey, JSON.stringify(userData));
+    }
+    this.setState({ submit: false, logout: true });
+  };
+
   render() {
-    const localUname = `${_.get(
-      this.state.loggedInUserObj,
-      "firstName",
+    const { loggedInUserObj, submit, logout } = this.state;
+    const localUname = `${_.get(loggedInUserObj, "firstName", "")} ${_.get(
+      loggedInUserObj,
+      "lastName",
       ""
-    )} ${_.get(this.state.loggedInUserObj, "lastName", "")}`;
+    )}`.trim();
+
+    if (!submit) return <Navigate to="/" replace />;
 
     return (
-      <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-          <div className="container">
-            <img src="./logo.png" alt="" className="rotate" />
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarResponsive"
-              aria-controls="navbarResponsive"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarResponsive">
-              <ul className="navbar-nav ml-auto">
-                <li
-                  className="nav-item active text-right"
-                  onClick={this.onLogout}
-                >
-                  <button
-                    type="button"
-                    className="btn btn-danger"
-                    onClick={this.onLogout}
-                  >
-                    LOGOUT
-                  </button>
-                </li>
-              </ul>
+      <div className="dashboard-container">
+        {/* ✅ Bootstrap Navbar */}
+        <nav className="custom-navbar navbar navbar-expand-lg navbar-dark bg-dark">
+  <div className="container">
+    <Link to="/" className="navbar-brand d-flex align-items-center custom-brand">
+      <img src="/logo.png" alt="Logo" className="custom-logo me-2" />
+      <span>Vaccine Dashboard</span>
+    </Link>
+
+    <button
+      className="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#customNavbarNav"
+      aria-controls="customNavbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span className="navbar-toggler-icon"></span>
+    </button>
+
+    <div className="collapse navbar-collapse" id="customNavbarNav">
+      <ul className="navbar-nav ms-auto">
+        <li className="nav-item">
+          <button className="btn btn-danger custom-logout-btn" onClick={this.onLogout}>
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+        {/* User Greeting */}
+        <div className="container mt-4 text-center">
+          <h1>Hello, {localUname || "User"}</h1>
+          <p>Welcome to your dashboard.</p>
+        </div>
+
+        {/* Dashboard Cards */}
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col-md-4 mb-3">
+              <Link
+                to="/appointments"
+                className="card p-3 shadow-sm text-decoration-none text-dark"
+              >
+                <h5>Appointments</h5>
+                <p>View and manage your appointments.</p>
+              </Link>
+            </div>
+            <div className="col-md-4 mb-3">
+              <Link
+                to="/vaccines"
+                className="card p-3 shadow-sm text-decoration-none text-dark"
+              >
+                <h5>Vaccines</h5>
+                <p>Browse available vaccines.</p>
+              </Link>
+            </div>
+            <div className="col-md-4 mb-3">
+              <Link
+                to="/provider-register"
+                className="card p-3 shadow-sm text-decoration-none text-dark"
+              >
+                <h5>Account</h5>
+                <p>Manage your profile and logout securely.</p>
+              </Link>
             </div>
           </div>
-        </nav>
-
-        <div className="container">
-          <h1 className="mt-4">HELLO {localUname}</h1>
-          <p>Welcome to DashBoard</p>
         </div>
-        {!this.state.submit ? <Navigate to={`/`} /> : null}
-        {this.state.logout ? (
-          <div>Done</div>
-        ) : (
-          ""
-        )}
 
-        {/* <nav className="navbar navbar-expand-md bg-dark navbar-dark">
-          <a className="navbar-brand" href="#">
-            Navbar
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapsibleNavbar"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Link
-                </a>
-              </li>
-            </ul>
+        {/* Logout Message */}
+        {logout && (
+          <div className="text-center text-success mt-3">
+            Logout successful.
           </div>
-        </nav>
-        <br />
-
-        <div className="container">
-          <h3>Collapsible Navbar</h3>
-          <p>
-            In this example, the navigation bar is hidden on small screens and
-            replaced by a button in the top right corner (try to re-size this
-            window).
-          </p>
-          <p>
-            Only when the button is clicked, the navigation bar will be
-            displayed.
-          </p>
-          <p>
-            Tip: You can also remove the .navbar-expand-md className to ALWAYS
-            hide navbar links and display the toggler button.
-          </p>
-        </div> */}
+        )}
       </div>
     );
   }
 }
 
-export default DashBoard;
+const DashBoardWrapper = (props) => {
+  const location = useLocation();
+  return <DashBoard {...props} location={location} />;
+};
+
+export default DashBoardWrapper;

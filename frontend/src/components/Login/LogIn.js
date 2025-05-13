@@ -64,7 +64,7 @@ class LogIn extends React.Component {
             <div className="container mt-2 mb-4 divMiddle">
               <div className="col-sm-8 ml-auto mr-auto">
                 <h1 className="display-5 text-center pb-5">
-                  <u>React Signup, Signin, Logout features</u>
+                  
                 </h1>
                 <div
                   className="tab-content col-sm-6 ml-auto mr-auto"
@@ -77,13 +77,7 @@ class LogIn extends React.Component {
                     aria-labelledby="pills-signin-tab"
                   >
                     <div className="col-sm-12 border border-primary shadow rounded pt-2">
-                      <div className="text-center">
-                        <img
-                          src="./logo.png"
-                          className="rounded-circle border p-1 rotate"
-                          alt=""
-                        />
-                      </div>
+                      
                       <form onSubmit={props.handleSubmit}>
                         <div className="form-group">
                           <label className="font-weight-bold">
@@ -123,22 +117,23 @@ class LogIn extends React.Component {
                             value={props.values.password}
                           />
                         </div>
-                        <div className="form-group">
-                          <div className="row">
-                            <div className="col text-right">
-                              {" "}
-                              <Link to={"/register"}>Create Account</Link>{" "}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group">
+                         <div className="form-group">
                           <input
                             type="submit"
                             name="submit"
-                            value="Sign In"
+                            value="Log In"
                             className="btn btn-block btn-primary"
                           />
                         </div>
+                        <div className="form-group">
+                          <div className="row">
+                            <div className="col">
+                              {" "}
+                              <Link to={"/register"}>New User? Register here</Link>{" "}
+                            </div>
+                          </div>
+                        </div>
+                       
                       </form>
                       {localStorage.getItem(props.values.userName) &&
                       JSON.parse(localStorage.getItem(props.values.userName))

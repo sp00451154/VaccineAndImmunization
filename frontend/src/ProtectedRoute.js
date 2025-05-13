@@ -1,31 +1,20 @@
-import React from "react";
-import { Route, Navigate } from "react-router-dom";
-import _ from "lodash";
+// src/routes/ProtectedRoute.jsx
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import _ from 'lodash';
 
-function requireAuth(userNameKey) {
-  return JSON.parse(localStorage.getItem(userNameKey)).isUserLoggedIn;
-}
-
-export const ProtectedRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) => {
-        if (
-          _.get(props.location, "state.userName") &&
-          requireAuth(props.location.state.userName)
-        ) {
-          return <Component {...props} />;
-        } else {
-          return (
-            <Navigate
-              to={{
-                pathname: "/",
-              }}
-            />
-          );
-        }
-      }}
-    />
-  );
+const requireAuth = (userNameKey) => {
+  const user = JSON.parse(localStorage.getItem(userNameKey));
+  return user?.isUserLoggedIn;
 };
+
+const ProtectedRoute = ({ userNameKey }) => {
+  const location = useLocation();
+
+  const isAuthenticated =
+    _.get(location.state, 'userName') &&
+    requireAuth(location.state.userName);
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+};
+
+export default ProtectedRoute;
