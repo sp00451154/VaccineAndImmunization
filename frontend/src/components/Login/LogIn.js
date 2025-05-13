@@ -117,22 +117,23 @@ class LogIn extends React.Component {
                             value={props.values.password}
                           />
                         </div>
-                        <div className="form-group">
-                          <div className="row">
-                            <div className="col text-right">
-                              {" "}
-                              <Link to={"/register"}>Create Account</Link>{" "}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="form-group">
+                         <div className="form-group">
                           <input
                             type="submit"
                             name="submit"
-                            value="Sign In"
+                            value="Log In"
                             className="btn btn-block btn-primary"
                           />
                         </div>
+                        <div className="form-group">
+                          <div className="row">
+                            <div className="col">
+                              {" "}
+                              <Link to={"/register"}>New User? Register here</Link>{" "}
+                            </div>
+                          </div>
+                        </div>
+                       
                       </form>
                       {localStorage.getItem(props.values.userName) &&
                       JSON.parse(localStorage.getItem(props.values.userName))
