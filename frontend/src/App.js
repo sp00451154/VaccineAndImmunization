@@ -21,7 +21,7 @@ function App() {
           <Route path="*" component={Page404} />
         </Switch>
       </Router>
-      <AboutApp />
+      
     </div>
   );
 }
