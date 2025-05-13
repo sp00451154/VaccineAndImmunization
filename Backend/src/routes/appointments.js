@@ -1,15 +1,18 @@
 const express = require('express');
-const { createAppointment, getAppointments, getAppointmentById, updateAppointment, deleteAppointment } = require('../controllers/appointment_controller');
-const appointmentRouter = express.Router();
+const { createAppointment, getAppointments, getAppointmentById, updateAppointment, deleteAppointment, updateAppointmentStatus } = require('../controllers/appointment_controller');
+const { protect } = require('../middlewares/authMiddleware');
+const appointmentRoutes = express.Router();
 
-appointmentRouter.post('/', createAppointment );
+appointmentRoutes.post('/', protect, createAppointment );
 
-appointmentRouter.get('/', getAppointments);
+appointmentRoutes.get('/',protect, getAppointments);
 
-appointmentRouter.get('/:id', getAppointmentById);
+appointmentRoutes.get('/:id', protect, getAppointmentById);
 
-appointmentRouter.put('/:id', updateAppointment);
+appointmentRoutes.put('/:id', protect, updateAppointment);
 
-appointmentRouter.delete('/:id', deleteAppointment);
+appointmentRoutes.delete('/:id', protect, deleteAppointment);
 
-module.exports = appointmentRouter;
+appointmentRoutes.put("/update_status/:appointmentId", protect, updateAppointmentStatus)
+
+module.exports = appointmentRoutes;

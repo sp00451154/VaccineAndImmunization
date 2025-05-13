@@ -1,4 +1,4 @@
-const Appointment = require('../models/Appointment');
+const { Appointment } = require('../models/mongoose_models');
 
 exports.createAppointment = async (req, res) => {
     const appointment = new Appointment(req.body);
@@ -30,4 +30,45 @@ exports.updateAppointment = async (req, res) => {
 exports.deleteAppointment = async (req, res) => {
     await Appointment.findByIdAndDelete(req.params.id);
     res.json({ message: 'Deleted' });
+}
+
+exports.getAppointmentsByProivder = async (req, res) => {
+    const { providerId } = req.params;
+
+    try {
+        const appointments = await Appointment.find({ provider: providerId })
+            .populate('patient', 'name email phone')     // get basic patient info
+            .populate('vaccine', 'name doses frequency') // get vaccine info
+            .sort({ date: -1 });                         // optional: latest first
+
+        res.json(appointments);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+exports.updateAppointmentStatus = async (req, res) => {
+    const { appointmentId } = req.params;
+    const { status } = req.params;
+
+    const validStatuses = ['Scheduled', 'Completed', 'Cancelled'];
+    if (validStatuses.includes(status)) {
+        return res.status(400).json({ message: 'Invalid status value' });
+    }
+
+    try {
+        const updated = await Appointment.findByIdAndUpdate(
+            appointmentId,
+            { status },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        res.json({ message: 'Status updated successfully', appointment: updated });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 }

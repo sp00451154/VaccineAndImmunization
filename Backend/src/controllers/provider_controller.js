@@ -1,4 +1,4 @@
-const Provider = require('../models/Provider');
+const {Provider} = require('../models/mongoose_models');
 
 exports.createProvider = async (req, res) => {
     const provider = new Provider(req.body);
