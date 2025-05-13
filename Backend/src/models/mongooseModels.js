@@ -51,7 +51,7 @@ const vaccinationSchema = new Schema({
     appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' },
     doseDate: Date,
     doseNumber: Number,
-    status: { type: String, enum: ['Pending', 'Administered', 'Missed'], default: 'Pending' }
+    status: { type: String, enum: ['Pending', 'Up-to-date', 'Verification-pending'], default: 'Pending' }
 });
 
 module.exports = mongoose.model('Vaccine', vaccineSchema);
