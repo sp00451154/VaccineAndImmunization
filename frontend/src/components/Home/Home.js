@@ -56,7 +56,7 @@ class Home extends React.Component {
                                     </div>
                                 </nav>
                                
-                                <div class=" col-12 col-sm-10 offset-lg-2 offset-sm-1">
+                                <div class=" col-12 col-sm-10 offset-lg-1 offset-sm-1">
                                     <h1 class="text-white">Your Health, Our Priority</h1>
                                     <h6 class="text-white">Explore the latest health information and resources from Bayer Healthcare</h6>
                                 </div>
@@ -65,6 +65,7 @@ class Home extends React.Component {
                         </div>
                     </div>
                 </div>
+                
             </div>
         );
     }
