@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import _ from "lodash";
 
 function requireAuth(userNameKey) {
@@ -18,7 +18,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
           return <Component {...props} />;
         } else {
           return (
-            <Redirect
+            <Navigate
               to={{
                 pathname: "/",
               }}

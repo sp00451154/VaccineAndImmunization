@@ -1,6 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
-import SweetAlert from "react-bootstrap-sweetalert";
+import { Navigate } from "react-router-dom";
 const _ = require("lodash");
 
 class DashBoard extends React.Component {
@@ -89,18 +88,9 @@ class DashBoard extends React.Component {
           <h1 className="mt-4">HELLO {localUname}</h1>
           <p>Welcome to DashBoard</p>
         </div>
-        {!this.state.submit ? <Redirect to={`/`} /> : null}
+        {!this.state.submit ? <Navigate to={`/`} /> : null}
         {this.state.logout ? (
-          <SweetAlert
-            warning
-            showCancel
-            confirmBtnText="Yes"
-            confirmBtnBsStyle="danger"
-            title="Are you sure?"
-            onConfirm={this.onLogoutYes}
-            onCancel={this.onLogout}
-            focusCancelBtn
-          ></SweetAlert>
+          <div>Done</div>
         ) : (
           ""
         )}
