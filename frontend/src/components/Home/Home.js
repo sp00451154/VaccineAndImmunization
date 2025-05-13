@@ -65,6 +65,9 @@ class Home extends React.Component {
                         </div>
                     </div>
                 </div>
+                <div class="container">
+                    <p class="font-weight-bold">Featured Health Topics</p>
+                </div>
                 
             </div>
         );
