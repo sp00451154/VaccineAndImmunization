@@ -9,13 +9,15 @@ import Register from "./components/Register/Register";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Page404 from "./components/Page404/Page404";
 import ProviderRegister from './components/ProviderRegister/ProviderRegister';
+import Home from "./components/Home/Home";
 
 function App() {
   return (
     <div>
       <Router>
         <Switch>
-          <Route path="/" exact component={LogIn} />
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={LogIn} />
           <Route path="/register" exact component={Register} />
           <Route path="/provider-register" exact component={ProviderRegister} />
           <ProtectedRoute exact path="/dashboard" component={DashBoard} />
